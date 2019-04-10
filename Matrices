@@ -1,23 +1,13 @@
+# Matriz prueba
+
+a = [[3,3,3,3],[1,1,1,1],[7,7,7,7],[6,6,6,6]]
+b = [[5,5,5,5],[4,4,4,4],[8,8,8,8],[2,2,2,2]]
+
 # matrices en tiempo O(n^3) que calcule cada elemento de la matriz C como c_{ij} = \sum_{k=1}^n a_{ik}*b_{kj}
 
-a = [[1,2,3,4],[5,6,7,8],[9,1,2,3],[4,5,6,7]]
-b = [[8,9,1,2],[3,4,5,6],[7,8,9,1],[2,3,4,5]]
-
-def read(filename):
-    lines = open(filename, 'r').read().splitlines()
-    a = []
-    b = []
-    matrix = a
-    for line in lines:
-        if line != "":
-            matrix.append(map(int, line.split("\t")))
-        else:
-            matrix = b
-    return a, b
-
-def print_matrix(matrix):
-    for line in matrix:
-        print("\t".join(map(str, line)))
+def nue_m(p, q): # create a matrix filled with 0s
+    matrix = [[0 for row in range(p)] for col in range(q)]
+    return matrix
 
 def ikj_matrix_product(a, b):
     n = len(a)
@@ -28,13 +18,16 @@ def ikj_matrix_product(a, b):
                 c[i][j] += a[i][k] * b[k][j]
     return c
 
-def sustraer(a, b):
-    n = len(a)
-    c = [[0 for j in xrange(0, n)] for i in xrange(0, n)]
-    for i in xrange(0, n):
-        for j in xrange(0, n):
-            c[i][j] = a[i][j] - b[i][j]
-    return c
+def sustraer(a, b): # multiply the two matrices
+    if len(a[0]) != len(b): # if # of col != # of rows:
+        return "Matrices are not m*n and n*p"
+    else:
+        p_matrix = nue_m(len(a), len(b[0]))
+        for i in range(len(a)):
+            for j in range(len(b[0])):
+                for k in range(len(b)):
+                    p_matrix[i][j] += a[i][k]*b[k][j]
+    return p_matrix
 
 def Der(a, b): 
     if len(a[0]) != len(b): 
@@ -138,4 +131,4 @@ def strassen(a, b, q):
 print ("Strassen:")
 print (strassen(a, b, 4))
 print ("Final:")
-print (straight(a, b))
+print (sustraer(a, b))
